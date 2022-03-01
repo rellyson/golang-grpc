@@ -20,11 +20,11 @@ func SetHandlers(s *grpc.Server) {
 
 // Implements GetCurrencies Service from protocol buffer
 func (s *server) GetCurrencies(ctx context.Context, in *cpb.CurrenciesRequest) (*cpb.CurrenciesResponse, error) {
-	log.Printf("Received: %v", in.String())
+	log.Printf("Received: %v", in.ProtoReflect().Descriptor())
 	res, err := services.ListCurrencies()
 
 	if err != nil {
-		log.Fatal(err)
+		return &cpb.CurrenciesResponse{}, err
 	}
 
 	return &cpb.CurrenciesResponse{

@@ -12,5 +12,6 @@ In gRPC, a client application can directly call a method on a server application
 
 ## Useful links
 
-- [grpc official docs](https://grpc.io/docs/)
-- [golang grpc](https://grpc.io/docs/languages/go/quickstart/)
+- [Grpc Official Docs](https://grpc.io/docs/)
+- [Golang gRPC](https://grpc.io/docs/languages/go/quickstart/)
+- [Exchangeratesapi Docs](https://exchangeratesapi.io/documentation/)

@@ -9,6 +9,8 @@ import (
 )
 
 func Bootstrap() (*grpc.Server, error) {
+	log.Print("Starting application...")
+
 	adr := os.Getenv("LISTEN_ADR")
 	lis, err := net.Listen("tcp", adr)
 

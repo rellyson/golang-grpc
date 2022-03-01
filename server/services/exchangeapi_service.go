@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
 
@@ -17,6 +18,7 @@ func ListCurrencies() (*cpb.CurrenciesResponse, error) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 
 	if err != nil {
+		log.Fatal(err)
 		return &cpb.CurrenciesResponse{}, err
 	}
 
@@ -42,6 +44,7 @@ func ListCurrencies() (*cpb.CurrenciesResponse, error) {
 
 	// Use json.Decode for reading streams of JSON data
 	if err := json.NewDecoder(res.Body).Decode(&record); err != nil {
+		log.Fatal(err)
 		return nil, err
 	}
 

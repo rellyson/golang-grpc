@@ -10,8 +10,8 @@ services:
       - server-app
     volumes:
       - ./:/opt/app/
-    ports:
-      - 3000:3000
+    env_file:
+      - ./.env
         
   server-app:
     container_name: go-server-app
