@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  client-app:
+    container_name: go-client-app
+    build:
+      context: .
+    links:
+      - server-app
+    depends_on:
+      - server-app
+    volumes:
+      - ./client:/opt/app
+    ports:
+      - 3000:3000
+        
+  server-app:
+    container_name: go-server-app
+    build:
+      context: .
+    links:
+      - client-app
+    volumes:
+      - ./server:/opt/app
+    ports:
+      - 3000:3000
