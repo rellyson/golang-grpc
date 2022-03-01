@@ -3,10 +3,10 @@ generate:
 	proto/currencies.proto
 
 build_client:
-	@go build -o ./bin/client-bin ./main.go
+	@go build -o ./bin/client-bin ./client/*.go
 
 build_server:
-	@go build -o ./bin/server-bin ./main.go
+	@go build -o ./bin/server-bin ./server/*.go
 
 # .PHONY is used for reserving tasks words
 .PHONY: generate build_client build_server

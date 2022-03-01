@@ -9,7 +9,7 @@ services:
     depends_on:
       - server-app
     volumes:
-      - ./client:/opt/app
+      - ./client:/opt/app/client
       - ./go.mod:/opt/app/go.mod
       - ./go.sum:/opt/app/go.sum
       - ./Makefile:/opt/app/Makefile
@@ -22,7 +22,7 @@ services:
       context: .
     command: sh -c "go mod download && make build_server && ./bin/server-bin"
     volumes:
-      - ./server:/opt/app
+      - ./server:/opt/app/server
       - ./go.mod:/opt/app/go.mod
       - ./go.sum:/opt/app/go.sum
       - ./Makefile:/opt/app/Makefile
