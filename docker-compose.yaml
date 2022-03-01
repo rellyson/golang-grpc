@@ -5,14 +5,11 @@ services:
     container_name: go-client-app
     build:
       context: .
-    command: sh -c "go mod download && make build_client && ./bin/client-bin"
+    command: sh -c "make build_client && ./bin/client-bin"
     depends_on:
       - server-app
     volumes:
-      - ./client:/opt/app/client
-      - ./go.mod:/opt/app/go.mod
-      - ./go.sum:/opt/app/go.sum
-      - ./Makefile:/opt/app/Makefile
+      - ./:/opt/app/
     ports:
       - 3000:3000
         
@@ -20,12 +17,9 @@ services:
     container_name: go-server-app
     build:
       context: .
-    command: sh -c "go mod download && make build_server && ./bin/server-bin"
+    command: sh -c "make build_server && ./bin/server-bin"
     volumes:
-      - ./server:/opt/app/server
-      - ./go.mod:/opt/app/go.mod
-      - ./go.sum:/opt/app/go.sum
-      - ./Makefile:/opt/app/Makefile
+      - ./:/opt/app/
     env_file:
       - ./.env
     ports:

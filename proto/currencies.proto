@@ -1,7 +1,17 @@
 syntax = "proto3";
-
 package currency;
+option go_package = "/;currency";
 
 service CurrencyService {
-    rpc GetCurrencies() returns() {}
+    rpc GetCurrencies(CurrenciesRequest) returns(CurrenciesResponse) {}
+}
+
+message CurrenciesRequest {}
+
+message CurrenciesResponse {
+ bool success = 1;
+ string timestamp = 2;
+ string base = 3;
+ string date = 4;
+ repeated string rates = 5; 
 }
