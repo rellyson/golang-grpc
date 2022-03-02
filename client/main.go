@@ -25,8 +25,8 @@ func main() {
 	res, err := c.GetCurrencies(context.Background(), &cpb.CurrenciesRequest{})
 
 	if err != nil {
-		log.Fatalf("Error calling GetCurrencies Procedure Call: %s", err)
+		log.Fatalf("Error calling GetCurrencies call: %s", err)
 	}
 
-	log.Printf("Response from GetCurrencies Procedure Call: %s", res)
+	log.Printf("Response from call: %s", res)
 }

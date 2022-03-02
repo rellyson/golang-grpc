@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -39,14 +40,11 @@ func ListCurrencies() (*cpb.CurrenciesResponse, error) {
 	// Defer the closing of the body
 	defer res.Body.Close()
 
-	// Fill the record with the data from the JSON
-	var record *cpb.CurrenciesResponse
+	c := cpb.CurrenciesResponse{}
+	body, _ := ioutil.ReadAll(res.Body)
+	json.Unmarshal(body, &c)
 
-	// Use json.Decode for reading streams of JSON data
-	if err := json.NewDecoder(res.Body).Decode(&record); err != nil {
-		log.Fatal(err)
-		return nil, err
-	}
+	log.Printf("exchange response: %s", body)
 
-	return record, nil
+	return &c, nil
 }
