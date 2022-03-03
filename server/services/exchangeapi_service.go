@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	cpb "github.com/rellyson/golang-grpc/proto"
+	cpb "github.com/rellyson/golang-grpc/proto/gen-code"
 )
 
 func ListCurrencies() (*cpb.CurrenciesResponse, error) {

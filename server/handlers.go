@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	cpb "github.com/rellyson/golang-grpc/proto"
+	cpb "github.com/rellyson/golang-grpc/proto/gen-code"
 	"github.com/rellyson/golang-grpc/server/services"
 	"google.golang.org/grpc"
 )

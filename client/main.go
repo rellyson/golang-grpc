@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	cpb "github.com/rellyson/golang-grpc/proto"
+	cpb "github.com/rellyson/golang-grpc/proto/gen-code"
 	"google.golang.org/grpc"
 )
 
