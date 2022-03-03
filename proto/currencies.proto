@@ -4,6 +4,13 @@ option go_package = "/;currency";
 
 service CurrencyService {
     rpc GetCurrencies(CurrenciesRequest) returns(CurrenciesResponse) {}
+    rpc ConvertCurrencies(ConvertCurrenciesRequest) returns(ConvertCurrenciesResponse){}
+}
+
+message ConvertCurrenciesRequest {
+  string from = 1;
+  string to = 2;
+  int64 amount = 3;
 }
 
 message CurrenciesRequest {}
@@ -14,6 +21,15 @@ message CurrenciesResponse {
  string base = 3;
  string date = 4;
  Struct rates = 5; 
+}
+
+message ConvertCurrenciesResponse {
+  bool success = 1;
+  Struct query = 2;
+  Struct info = 3;
+  string historical = 4;
+  string date = 5;
+  int64 result = 6;
 }
 
 // The JSON representation for `Struct` is JSON object.

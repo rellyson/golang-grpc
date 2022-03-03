@@ -22,10 +22,10 @@ func main() {
 
 	c := cpb.NewCurrencyServiceClient(conn)
 
-	res, err := c.GetCurrencies(context.Background(), &cpb.CurrenciesRequest{})
+	res, err := c.ConvertCurrencies(context.Background(), &cpb.ConvertCurrenciesRequest{From: "BRL", To: "USD", Amount: 25})
 
 	if err != nil {
-		log.Fatalf("Error calling GetCurrencies call: %s", err)
+		log.Fatalf("Error calling server: %s", err)
 	}
 
 	log.Printf("Response from call: %s", res)

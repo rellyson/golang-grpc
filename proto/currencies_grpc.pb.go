@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CurrencyServiceClient interface {
 	GetCurrencies(ctx context.Context, in *CurrenciesRequest, opts ...grpc.CallOption) (*CurrenciesResponse, error)
+	ConvertCurrencies(ctx context.Context, in *ConvertCurrenciesRequest, opts ...grpc.CallOption) (*ConvertCurrenciesResponse, error)
 }
 
 type currencyServiceClient struct {
@@ -38,11 +39,21 @@ func (c *currencyServiceClient) GetCurrencies(ctx context.Context, in *Currencie
 	return out, nil
 }
 
+func (c *currencyServiceClient) ConvertCurrencies(ctx context.Context, in *ConvertCurrenciesRequest, opts ...grpc.CallOption) (*ConvertCurrenciesResponse, error) {
+	out := new(ConvertCurrenciesResponse)
+	err := c.cc.Invoke(ctx, "/currency.CurrencyService/ConvertCurrencies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CurrencyServiceServer is the server API for CurrencyService service.
 // All implementations must embed UnimplementedCurrencyServiceServer
 // for forward compatibility
 type CurrencyServiceServer interface {
 	GetCurrencies(context.Context, *CurrenciesRequest) (*CurrenciesResponse, error)
+	ConvertCurrencies(context.Context, *ConvertCurrenciesRequest) (*ConvertCurrenciesResponse, error)
 	mustEmbedUnimplementedCurrencyServiceServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedCurrencyServiceServer struct {
 
 func (UnimplementedCurrencyServiceServer) GetCurrencies(context.Context, *CurrenciesRequest) (*CurrenciesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCurrencies not implemented")
+}
+func (UnimplementedCurrencyServiceServer) ConvertCurrencies(context.Context, *ConvertCurrenciesRequest) (*ConvertCurrenciesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConvertCurrencies not implemented")
 }
 func (UnimplementedCurrencyServiceServer) mustEmbedUnimplementedCurrencyServiceServer() {}
 
@@ -84,6 +98,24 @@ func _CurrencyService_GetCurrencies_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CurrencyService_ConvertCurrencies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConvertCurrenciesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CurrencyServiceServer).ConvertCurrencies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/currency.CurrencyService/ConvertCurrencies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CurrencyServiceServer).ConvertCurrencies(ctx, req.(*ConvertCurrenciesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CurrencyService_ServiceDesc is the grpc.ServiceDesc for CurrencyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var CurrencyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCurrencies",
 			Handler:    _CurrencyService_GetCurrencies_Handler,
+		},
+		{
+			MethodName: "ConvertCurrencies",
+			Handler:    _CurrencyService_ConvertCurrencies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
