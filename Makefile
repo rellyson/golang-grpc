@@ -2,8 +2,8 @@ prepare:
 	go mod download
 
 generate:
-	@protoc -I=proto --go_out=proto --go-grpc_out=proto \
-	 --go-grpc_opt=paths=source_relative proto/*.proto
+	@protoc -I=proto --go_out=proto/gen-code --go-grpc_out=proto/gen-code \
+	 --go-grpc_opt=paths=source_relative -I. proto/*.proto
 
 
 build_client: prepare

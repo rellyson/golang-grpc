@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	cpb "github.com/rellyson/golang-grpc/proto/gen-code"
+	e "github.com/rellyson/golang-grpc/proto/gen-code/examples"
 	"google.golang.org/grpc"
 )
 
@@ -20,13 +20,13 @@ func main() {
 	}
 	defer conn.Close()
 
-	c := cpb.NewCurrencyServiceClient(conn)
+	c := e.NewExampleServiceClient(conn)
 
-	res, err := c.ConvertCurrencies(context.Background(), &cpb.ConvertCurrenciesRequest{From: "BRL", To: "USD", Amount: 25})
+	res, err := c.SayHello(context.Background(), &e.HelloRequest{Name: "Ednaldo Pereira"})
 
 	if err != nil {
 		log.Fatalf("Error calling server: %s", err)
 	}
 
-	log.Printf("Response from call: %s", res)
+	log.Printf("Response: %s", res.Message)
 }

@@ -4,7 +4,8 @@ import (
 	"context"
 	"log"
 
-	cpb "github.com/rellyson/golang-grpc/proto/gen-code"
+	cpb "github.com/rellyson/golang-grpc/proto/gen-code/currencies"
+	e "github.com/rellyson/golang-grpc/proto/gen-code/examples"
 	"github.com/rellyson/golang-grpc/server/services"
 	"google.golang.org/grpc"
 )
@@ -12,10 +13,12 @@ import (
 // server is used to implement pb Server.
 type server struct {
 	cpb.UnimplementedCurrencyServiceServer
+	e.UnimplementedExampleServiceServer
 }
 
 func SetHandlers(s *grpc.Server) {
 	cpb.RegisterCurrencyServiceServer(s, &server{})
+	e.RegisterExampleServiceServer(s, &server{})
 }
 
 // Implements GetCurrencies Service from protocol buffer
@@ -50,5 +53,16 @@ func (s *server) ConvertCurrencies(ctx context.Context, in *cpb.ConvertCurrencie
 		Historical: res.Historical,
 		Date:       res.Date,
 		Result:     res.Result,
+	}, nil
+}
+
+// Implements Hello Service from protocol buffer
+
+func (s *server) SayHello(ctx context.Context, in *e.HelloRequest) (*e.HelloResponse, error) {
+	log.Printf("Received request to say hello to %v", in.Name)
+	m := services.SayHello(in.Name)
+
+	return &e.HelloResponse{
+		Message: m,
 	}, nil
 }
