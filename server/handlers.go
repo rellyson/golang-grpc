@@ -66,3 +66,13 @@ func (s *server) SayHello(ctx context.Context, in *e.HelloRequest) (*e.HelloResp
 		Message: m,
 	}, nil
 }
+
+// Implements Sum Service from protocol buffer
+func (s *server) Sum(ctx context.Context, in *e.SumRequest) (*e.SumResponse, error) {
+	log.Printf("Received request to sum %v and %v", in.Num1, in.Num2)
+	r := services.Sum(in.Num1, in.Num2)
+
+	return &e.SumResponse{
+		Result: r,
+	}, nil
+}
